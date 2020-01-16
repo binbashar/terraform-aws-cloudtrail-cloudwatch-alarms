@@ -253,6 +253,3 @@ Check out [our other projects][github], [apply for a job][jobs], or [hire us][hi
 
   [antonbabenko_homepage]: https://github.com/antonbabenko
   [antonbabenko_avatar]: https://avatars3.githubusercontent.com/u/393243?s=144&v=4
-
-
-
