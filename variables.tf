@@ -38,3 +38,9 @@ variable "create_dashboard" {
   default     = true
   type        = bool
 }
+
+variable "alarm_suffix" {
+  default     = ""
+  description = "Suffix to add to alarm name, used for separating different AWS account."
+  type        = string
+}

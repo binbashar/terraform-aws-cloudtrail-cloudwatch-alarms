@@ -83,7 +83,7 @@ resource "aws_cloudwatch_log_metric_filter" "default" {
 
 resource "aws_cloudwatch_metric_alarm" "default" {
   count               = length(local.filter_pattern)
-  alarm_name          = "${local.metric_name[count.index]}-alarm"
+  alarm_name          = "${local.metric_name[count.index]}-alarm-${var.alarm_suffix}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = local.metric_name[count.index]
