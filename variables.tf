@@ -44,3 +44,21 @@ variable "alarm_suffix" {
   description = "Suffix to add to alarm name, used for separating different AWS account."
   type        = string
 }
+
+variable "alarm_evaluation_periods" {
+  description = "Custom evaluation period for any given alarm, otherwise a default is used."
+  default     = {}
+  type        = map
+}
+
+variable "alarm_period" {
+  description = "Custom period for any given alarm, otherwise a default is used."
+  default     = {}
+  type        = map
+}
+
+variable "alarm_threshold" {
+  description = "Custom threshold for any given alarm, otherwise a default is used."
+  default     = {}
+  type        = map
+}

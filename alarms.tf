@@ -7,6 +7,10 @@ locals {
   endpoints     = distinct(compact(concat(list(local.sns_topic_arn), var.additional_endpoint_arns)))
   region        = var.region == null ? data.aws_region.current.name : var.region
 
+  default_evaluation_periods  = 1
+  default_period              = "300" // 5 min
+  default_threshold           = "1"
+
   metric_name = [
     "AuthorizationFailureCount",
     "S3BucketActivityEventCount",
@@ -85,13 +89,13 @@ resource "aws_cloudwatch_metric_alarm" "default" {
   count               = length(local.filter_pattern)
   alarm_name          = "${local.metric_name[count.index]}-alarm-${var.alarm_suffix}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "1"
+  evaluation_periods  = lookup(var.alarm_evaluation_periods, local.metric_name[count.index], local.default_evaluation_periods)
   metric_name         = local.metric_name[count.index]
   namespace           = local.metric_namespace
-  period              = "300" // 5 min
+  period              = lookup(var.alarm_period, local.metric_name[count.index], local.default_period)
   statistic           = "Sum"
   treat_missing_data  = "notBreaching"
-  threshold           = local.metric_name[count.index] == "ConsoleSignInFailureCount" ? "3" : "1"
+  threshold           = local.metric_name[count.index] == "ConsoleSignInFailureCount" ? "3" : lookup(var.alarm_threshold, local.metric_name[count.index], local.default_threshold)
   alarm_description   = local.alarm_description[count.index]
   alarm_actions       = local.endpoints
 }
